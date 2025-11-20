@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  web:
+    image: openresty/openresty:latest
+    container_name: openresty_web
+    ports:
+      - "8180:80"
+    volumes:
+      - ./nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf:ro
+      - ./html:/usr/local/openresty/nginx/html:ro
+      - ./conf.d:/etc/nginx/conf.d:ro
+    restart: unless-stopped
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    driver: bridge
